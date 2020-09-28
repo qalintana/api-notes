@@ -12,4 +12,5 @@ const NoteSchema = new Schema({
   },
 });
 
+NoteSchema.index({ title: 'text', body: 'text' });
 export default model('Note', NoteSchema);
