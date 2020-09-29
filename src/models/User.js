@@ -18,13 +18,16 @@ const UserSchema = new Schema({
 
 UserSchema.pre('save', async function (next) {
   if (this.isNew || this.isModified('password')) {
-    bcrypt.hash(this.password, 10, (error, hashePassword) => {
-      if (error) next(error);
-      else {
-        this.password = hashePassword;
-        next();
-      }
-    });
+    const result = await bcrypt.hash(this.password, 10);
+    this.password = result;
+    next();
+    // bcrypt.hash(this.password, 10, (error, hashePassword) => {
+    //   if (error) next(error);
+    //   else {
+    //     this.password = hashePassword;
+    //     next();
+    //   }
+    // });
   }
 });
 
